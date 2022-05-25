@@ -1,0 +1,29 @@
+{
+  "name": "bikeservice-be",
+  "version": "1.0.0",
+  "description": "bike service backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harisshk/BikeService-Be.git"
+  },
+  "author": "Harisshk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harisshk/BikeService-Be/issues"
+  },
+  "homepage": "https://github.com/harisshk/BikeService-Be#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.4",
+    "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16"
+  }
+}
