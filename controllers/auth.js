@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { StatusCodes } = require("http-status-codes");
 
-
-
 const register = async (req, res) => {
     try {
         //Checking for a user with same email Id
@@ -31,7 +29,7 @@ const register = async (req, res) => {
     } catch (error) {
         return res.status(StatusCodes.BAD_REQUEST).json({
             message: "Error in creating the Account",
-            error: true,
+            success: false,
             err: error.message,
         });
     }
@@ -44,14 +42,14 @@ const login = (req, res) => {
     User.findOne({ email: req.body.email }, (error, userInfo) => {
         if (error || !userInfo) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                error: true,
+                success: false,
                 message: "No account found using this email Id",
             });
         }
         bcrypt.compare(req.body.password, userInfo.password, function (err, check) {
             if (err || !check) {
                 return res.status(StatusCodes.BAD_REQUEST).json({
-                    error: true,
+                    success: false,
                     message: "Mismatch email / password",
                 });
             }
@@ -67,7 +65,7 @@ const login = (req, res) => {
                 (e, userInfoWithToken) => {
                     if (e) {
                         return res.status(StatusCodes.BAD_REQUEST).json({
-                            error: true,
+                            success: false,
                             message: "Error in getting the JWT Tokens",
                         });
                     }
@@ -77,7 +75,7 @@ const login = (req, res) => {
                     userInfoWithToken.jwtToken = token;
 
                     return res.status(StatusCodes.ACCEPTED).json({
-                        error: false,
+                        success: true,
                         message: "Successfully Logged in",
                         user: userInfoWithToken,
                     });
