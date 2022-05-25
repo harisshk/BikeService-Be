@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			enum: ["CUSTOMER", "OWNER"]
 		},
+		bikes: {
+			type: Array,
+			ref: 'Bike'
+		}
 	},
 	{timestamps: true},
 );

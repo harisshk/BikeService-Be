@@ -1,11 +1,13 @@
 const express = require('express');
 
- const authRoute = require('./auth');
-// const applicationRoute = require('./application');
+const authRoute = require('./auth');
+const featureRoute = require('./feature');
+const bikeRoute = require('./bike');
 
 const router = express.Router();
 
 router.use('/auth', authRoute);
-// router.use('/application', applicationRoute)
+router.use('/feature', featureRoute)
+router.use('/bike', bikeRoute)
 
 module.exports = router;

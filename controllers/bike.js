@@ -1,19 +1,21 @@
-const ServiceFeatures = require('../models/serviceFeatures')
+const Bike = require('../models/Bike')
 const { StatusCodes } = require("http-status-codes");
+const User = require('../models/user');
 
-const createFeature = async (req, res) => {
+const createBikeData = async (req, res) => {
     try {
-        let preFeature = await ServiceFeatures.findOne({ name: req.body.name })
-        if (preFeature) {
+        let preData = await Bike.findOne({ registrationNumber: req.body.registrationNumber })
+        if (preData) {
             return res.status(StatusCodes.CONFLICT).json({
                 success: false,
                 message: "DUPLICATE_DATA",
             });
         }
-        const newFeature = await new ServiceFeatures(req?.body).save();
+        const newBikeData = await new Bike(req?.body).save();
+        await User.findByIdAndUpdate({ _id: req?.body?.owner }, { $push: { bikes: newBikeData?._id } })
         res.status(StatusCodes.OK).json(({
             success: true,
-            data: newFeature
+            data: newBikeData
         }))
 
     } catch (error) {
@@ -25,4 +27,4 @@ const createFeature = async (req, res) => {
     }
 }
 
-module.exports = { createFeature }
+module.exports = { createBikeData }
