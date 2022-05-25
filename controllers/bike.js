@@ -27,4 +27,93 @@ const createBikeData = async (req, res) => {
     }
 }
 
-module.exports = { createBikeData }
+const editBikeData = async (req, res) => {
+    try {
+        
+        const { id } = req.params;
+        const updatedBikeData = await Bike.findOneAndUpdate(
+            {_id: id},
+            {$set: req.body}
+        );
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: updatedBikeData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in updating the Bike",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+
+const getBikeData = async (req, res) => {
+    try {
+        
+        const { id } = req.params;
+        const bikeData = await Bike.findOne({_id: id});
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: bikeData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in getting the Bike Data",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+const getAllBikeDataByOwner = async (req, res) => {
+    try {
+        const { owner } = req.params;
+        const bikeData = await Bike.find({ owner }).populate('owner');
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: bikeData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in getting the Bike Data",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+
+const getAllBikeData = async (req, res) => {
+    try {
+        
+        // {
+        //     status: "PENDING",
+        //     owner: "ownerId"
+        // }
+
+        const { query } = req.body
+        const bikeData = await Bike.find(query).populate('owner');
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: bikeData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in getting the Bike Data",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+module.exports = { createBikeData, editBikeData, getBikeData, getAllBikeDataByOwner, getAllBikeData }

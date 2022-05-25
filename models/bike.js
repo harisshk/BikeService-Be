@@ -27,6 +27,14 @@ const bike = new mongoose.Schema(
 			trim: true,
 			required: true,
             max: 10
+        },
+        isActive: {
+            type: Boolean,
+            default: true
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false
         }
 	},
 	{timestamps: true},
