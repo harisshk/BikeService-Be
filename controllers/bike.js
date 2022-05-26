@@ -6,8 +6,9 @@ const createBikeData = async (req, res) => {
     try {
         let preData = await Bike.findOne({ registrationNumber: req.body.registrationNumber })
         if (preData) {
-            return res.status(StatusCodes.CONFLICT).json({
-                success: false,
+            return res.status(StatusCodes.OK).json({
+                success: true,
+                duplicate: true,
                 message: "DUPLICATE_DATA",
             });
         }
@@ -19,6 +20,7 @@ const createBikeData = async (req, res) => {
         }))
 
     } catch (error) {
+        console.log(err)
         return res.status(StatusCodes.BAD_REQUEST).json({
             message: "Error in creating the Feature",
             success: false,
