@@ -31,7 +31,6 @@ const createBikeData = async (req, res) => {
 
 const editBikeData = async (req, res) => {
     try {
-
         const { id } = req.params;
         const updatedBikeData = await Bike.findOneAndUpdate(
             { _id: id },
@@ -44,6 +43,7 @@ const editBikeData = async (req, res) => {
         }))
 
     } catch (error) {
+        console.log(error)
         return res.status(StatusCodes.BAD_REQUEST).json({
             message: "Error in updating the Bike",
             success: false,
