@@ -18,10 +18,15 @@ const services = new mongoose.Schema(
         },
         status: {
             type: String,
-            default: "PENDING",
+            default: "REQUESTED",
+            enum: ["REQUESTED", "PENDING", "READYFORDELIVERY", "COMPLETED"]
         },
         serviceAmount: {
             type: Number,
+        },
+        bookingDate: {
+            type: Date,
+            required: true
         }
 	},
 	{timestamps: true},

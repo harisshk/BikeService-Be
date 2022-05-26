@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.use('/auth', authRoute);
 router.use('/feature', featureRoute)
-router.use('/service', serviceRoute)
+router.use('/services', serviceRoute)
 router.use('/bike', bikeRoute)
 
 module.exports = router;
