@@ -18,7 +18,7 @@ const services = new mongoose.Schema(
         },
         status: {
             type: String,
-            default: "PENDING"
+            default: "PENDING",
         }
 	},
 	{timestamps: true},

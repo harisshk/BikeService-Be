@@ -26,7 +26,6 @@ const bike = new mongoose.Schema(
             type: String,
 			trim: true,
 			required: true,
-            max: 10
         },
         isActive: {
             type: Boolean,

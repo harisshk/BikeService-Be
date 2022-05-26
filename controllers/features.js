@@ -25,4 +25,45 @@ const createFeature = async (req, res) => {
     }
 }
 
-module.exports = { createFeature }
+const updateFeature = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedFeature = await ServiceFeatures.findOneAndUpdate(
+            { _id: id },
+            { $set: req.body },
+            { new: true }
+        );
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: updatedFeature
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in updating the feature",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+const getAllFeatures = async (req, res) => {
+    try {
+        const featureData = await ServiceFeatures.find({});
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: featureData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in getting the Bike Data",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+module.exports = { createFeature, updateFeature, getAllFeatures }

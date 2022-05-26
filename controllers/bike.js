@@ -93,14 +93,7 @@ const getAllBikeDataByOwner = async (req, res) => {
 
 const getAllBikeData = async (req, res) => {
     try {
-        
-        // {
-        //     status: "PENDING",
-        //     owner: "ownerId"
-        // }
-
-        const { query } = req.body
-        const bikeData = await Bike.find(query).populate('owner');
+        const bikeData = await Bike.find({}).populate('owner');
 
         res.status(StatusCodes.OK).json(({
             success: true,

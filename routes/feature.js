@@ -1,8 +1,13 @@
 var router = require("express").Router();
 
 const {
-    createFeature
+    createFeature, updateFeature, getAllFeatures
 } = require('../controllers/features')
+
 router.post('/create', createFeature)
+
+router.put('/edit/:id', updateFeature)
+
+router.get('/', getAllFeatures);
 
 module.exports = router;
