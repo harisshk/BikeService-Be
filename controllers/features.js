@@ -50,7 +50,7 @@ const updateFeature = async (req, res) => {
 
 const getAllFeatures = async (req, res) => {
     try {
-        const featureData = await ServiceFeatures.find({});
+        const featureData = await ServiceFeatures.find({ isDeleted: false });
 
         res.status(StatusCodes.OK).json(({
             success: true,

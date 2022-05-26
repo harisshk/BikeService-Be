@@ -29,11 +29,11 @@ const createBikeData = async (req, res) => {
 
 const editBikeData = async (req, res) => {
     try {
-        
+
         const { id } = req.params;
         const updatedBikeData = await Bike.findOneAndUpdate(
-            {_id: id},
-            {$set: req.body}
+            { _id: id },
+            { $set: req.body }
         );
 
         res.status(StatusCodes.OK).json(({
@@ -53,9 +53,9 @@ const editBikeData = async (req, res) => {
 
 const getBikeData = async (req, res) => {
     try {
-        
+
         const { id } = req.params;
-        const bikeData = await Bike.findOne({_id: id});
+        const bikeData = await Bike.findOne({ _id: id });
 
         res.status(StatusCodes.OK).json(({
             success: true,
@@ -93,7 +93,7 @@ const getAllBikeDataByOwner = async (req, res) => {
 
 const getAllBikeData = async (req, res) => {
     try {
-        const bikeData = await Bike.find({}).populate('owner');
+        const bikeData = await Bike.find({ isDeleted: false }).populate('owner');
 
         res.status(StatusCodes.OK).json(({
             success: true,
