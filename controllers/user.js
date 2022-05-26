@@ -15,8 +15,9 @@ const getCustomerDashboard = async (req, res) => {
             }
         }))
     } catch (error) {
+        console.log(error)
         return res.status(StatusCodes.BAD_REQUEST).json({
-            message: "Error in getting the Bike Data",
+            message: "Error in getting the Home Data",
             success: false,
             err: error.message,
         });
@@ -25,14 +26,11 @@ const getCustomerDashboard = async (req, res) => {
 
 const getOwnerDashboard = async (req, res) => {
     try {
-        const { id } = req.params
-        const serviceData = await Services.find({ owner: id })
-        const bikeData = await Bike.find({ owner: id }).countDocuments()
+        const serviceData = await Services.find({})
         res.status(StatusCodes.OK).json(({
             success: true,
             data: {
                 serviceData: groupByAndCount(serviceData, 'status'),
-                bikeData
             }
         }))
     } catch (error) {
@@ -45,4 +43,7 @@ const getOwnerDashboard = async (req, res) => {
 }
 
 
-module.exports = { getCustomerDashboard }
+module.exports = {
+    getCustomerDashboard,
+    getOwnerDashboard
+}

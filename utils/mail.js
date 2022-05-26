@@ -2,7 +2,7 @@ const PropTypes = require("prop-types");
 const nodemailer = require("nodemailer");
 
 const { 
-    USER,
+    EMAIL,
     PASS,
     SERVICE_PROVIDER,
     FROM
@@ -23,11 +23,15 @@ const sendMailToOne = async (to, subject, htmlBody) => {
         const transporter = nodemailer.createTransport({
             service: SERVICE_PROVIDER,
             auth: {
-                user: USER,
+                user: EMAIL,
                 pass: PASS,
             },
+            from : {
+                name: EMAIL,
+                address: EMAIL
+              }
         });
-    
+    console.log(EMAIL, PASS)
         const mailOptions = {
             from: FROM,
             to,
