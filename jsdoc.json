@@ -1,0 +1,11 @@
+{
+    "source": {
+      "include": ["routes", "utils"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+    },
+    "templates": {
+      "cleverLinks": true,
+      "monospaceLinks": true
+    }
+  }

@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
         const newUser = await new User(userData).save();
         newUser.password = undefined;
-        res.status(StatusCodes.OK).json(({
+        res.status(StatusCodes.CREATED).json(({
             success: true,
             data: newUser
         }))

@@ -1,10 +1,18 @@
 const Services = require('../models/services')
 const { StatusCodes } = require("http-status-codes");
+const { sendMailToOne } = require('../utils/mail');
 
 const createService = async (req, res) => {
     console.log(req?.body)
     try {
         const newService = await new Services(req?.body).save();
+
+        const to = "";
+        const subject = "";
+        const htmlCode = "";
+
+        await sendMailToOne(to, subject, htmlCode);
+
         res.status(StatusCodes.OK).json(({
             success: true,
             data: newService
@@ -64,8 +72,8 @@ const getAllServiceDataByOwner = async (req, res) => {
     try {
         const { owner } = req.params;
         const serviceData = await Services.find({ owner })
-        .populate('owner')
-        .populate('bike')
+            .populate('owner')
+            .populate('bike')
 
         res.status(StatusCodes.OK).json(({
             success: true,
