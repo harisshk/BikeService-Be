@@ -133,7 +133,9 @@ const updateService = async (req, res) => {
 
 const getAllServices = async (req, res) => {
     try {
-        const featureData = await ServiceFeatures.find({ isDeleted: false });
+        const featureData = await Services.find({ isDeleted: false })
+            .populate('owner')
+            .populate('bike')
 
         res.status(StatusCodes.OK).json(({
             success: true,

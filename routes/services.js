@@ -10,7 +10,7 @@
  */
 var router = require("express").Router();
 
-const { createService, getAllServiceDataByOwner } = require("../controllers/services");
+const { createService, getAllServiceDataByOwner, getAllServices } = require("../controllers/services");
 
 /**
   * Route serving creating services.
@@ -24,7 +24,7 @@ const { createService, getAllServiceDataByOwner } = require("../controllers/serv
 router.post('/create', createService)
 
 /**
-  * Route serving to get all services by owner.
+  * Route serving to get all services by customer id.
   * @name GET /services/owner/:owner
   * @function
   * @memberof module:routes/feature~featureRoutes
@@ -35,5 +35,18 @@ router.post('/create', createService)
 
 
 router.get('/owner/:owner', getAllServiceDataByOwner)
+
+/**
+  * Route serving to get all services by owner.
+  * @name GET /services/all
+  * @function
+  * @memberof module:routes/feature~featureRoutes
+  * @inner
+  * @returns {object} 200 - Ok
+  * @returns {Error} 400 - Unexpected Error
+  */
+
+
+router.get('/all', getAllServices)
 
 module.exports = router;
