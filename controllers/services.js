@@ -5,15 +5,15 @@ const { sendMailToOne } = require('../utils/mail');
 const createService = async (req, res) => {
     try {
         const newService = await new Services(req?.body).save()
-        const data = await Services.findById({ _id: newService?._id})
-        .populate("owner")
-        .populate("bike")
+        const data = await Services.findById({ _id: newService?._id })
+            .populate("owner")
+            .populate("bike")
         const to = "hari850800@gmail.com";
         const subject = "TEST";
         const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        const htmlCode = 
-        `
+        const htmlCode =
+            `
         <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">&nbsp;</div>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 <tbody>
@@ -93,7 +93,7 @@ const createService = async (req, res) => {
 
         sendMailToOne(to, subject, htmlCode);
         console.log(data)
-        res.status(StatusCodes.OK).json(({
+        res.status(StatusCodes.CREATED).json(({
             success: true,
             data: data
         }))

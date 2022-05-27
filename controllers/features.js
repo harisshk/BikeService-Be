@@ -11,7 +11,7 @@ const createFeature = async (req, res) => {
             });
         }
         const newFeature = await new ServiceFeatures(req?.body).save();
-        res.status(StatusCodes.OK).json(({
+        res.status(StatusCodes.CREATED).json(({
             success: true,
             data: newFeature
         }))

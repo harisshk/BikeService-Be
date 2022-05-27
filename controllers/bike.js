@@ -6,7 +6,7 @@ const createBikeData = async (req, res) => {
     try {
         let preData = await Bike.findOne({ registrationNumber: req.body.registrationNumber })
         if (preData) {
-            return res.status(StatusCodes.OK).json({
+            return res.status(StatusCodes.CONFLICT).json({
                 success: true,
                 duplicate: true,
                 message: "DUPLICATE_DATA",
@@ -14,7 +14,7 @@ const createBikeData = async (req, res) => {
         }
         const newBikeData = await new Bike(req?.body).save();
         await User.findByIdAndUpdate({ _id: req?.body?.owner }, { $push: { bikes: newBikeData?._id } })
-        res.status(StatusCodes.OK).json(({
+        res.status(StatusCodes.CREATED).json(({
             success: true,
             data: newBikeData
         }))
