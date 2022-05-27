@@ -10,7 +10,7 @@
  */
 var router = require("express").Router();
 
-const { createService, getAllServiceDataByOwner, getAllServices } = require("../controllers/services");
+const { createService, getAllServiceDataByOwner, getAllServices, updateService } = require("../controllers/services");
 
 /**
   * Route serving creating services.
@@ -48,5 +48,18 @@ router.get('/owner/:owner', getAllServiceDataByOwner)
 
 
 router.get('/all', getAllServices)
+
+/**
+  * Route serving to edit services by id.
+  * @name PUT /services/all
+  * @function
+  * @memberof module:routes/feature~featureRoutes
+  * @inner
+  * @returns {object} 200 - Ok
+  * @returns {Error} 400 - Unexpected Error
+  */
+
+
+router.put('/edit/:id', updateService)
 
 module.exports = router;
