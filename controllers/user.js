@@ -1,6 +1,6 @@
 const Services = require('../models/services')
 const { StatusCodes } = require("http-status-codes");
-const Bike = require('../models/Bike');
+const Bike = require('../models/bike');
 const { groupByAndCount } = require('../utils/groupByAndCount')
 const getCustomerDashboard = async (req, res) => {
     try {
