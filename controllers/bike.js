@@ -76,7 +76,7 @@ const getBikeData = async (req, res) => {
 const getAllBikeDataByOwner = async (req, res) => {
     try {
         const { owner } = req.params;
-        const bikeData = await Bike.find({ owner }).populate('owner');
+        const bikeData = await Bike.find({ owner, isDeleted: false }).populate('owner');
 
         res.status(StatusCodes.OK).json(({
             success: true,
