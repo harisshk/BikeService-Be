@@ -1,4 +1,4 @@
-const Bike = require('../models/Bike')
+const Bike = require('../models/bike')
 const { StatusCodes } = require("http-status-codes");
 const User = require('../models/user');
 
