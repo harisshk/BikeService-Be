@@ -31,7 +31,6 @@ const sendMailToOne = async (to, subject, htmlBody) => {
                 address: EMAIL
               }
         });
-    console.log(EMAIL, PASS)
         const mailOptions = {
             from: FROM,
             to,

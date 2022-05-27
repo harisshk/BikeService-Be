@@ -111,15 +111,17 @@ const createService = async (req, res) => {
 const updateService = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedFeature = await Services.findOneAndUpdate(
+        const updatedService = await Services.findOneAndUpdate(
             { _id: id },
             { $set: req.body },
             { new: true }
-        );
-
+        ).populate("owner");
+        if(updatedService?.status === 'READYFORDELIVERY'){
+            sendMailToOne(updatedService?.owner?.email, 'Delivery', `<p>Your bike is ready and you can take delivery</p>`)
+        }
         res.status(StatusCodes.OK).json(({
             success: true,
-            data: updatedFeature
+            data: updatedService
         }))
 
     } catch (error) {
