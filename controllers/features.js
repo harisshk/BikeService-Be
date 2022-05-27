@@ -66,4 +66,24 @@ const getAllFeatures = async (req, res) => {
     }
 }
 
-module.exports = { createFeature, updateFeature, getAllFeatures }
+const getFeatureById = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const featureData = await ServiceFeatures.findOne({ _id: id });
+
+        res.status(StatusCodes.OK).json(({
+            success: true,
+            data: featureData
+        }))
+
+    } catch (error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "Error in getting the Bike Data",
+            success: false,
+            err: error.message,
+        });
+    }
+}
+
+module.exports = { createFeature, updateFeature, getAllFeatures, getFeatureById }

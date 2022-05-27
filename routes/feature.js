@@ -11,7 +11,7 @@
 var router = require("express").Router();
 
 const {
-    createFeature, updateFeature, getAllFeatures
+    createFeature, updateFeature, getAllFeatures, getFeatureById
 } = require('../controllers/features')
 
 
@@ -50,5 +50,16 @@ router.put('/edit/:id', updateFeature)
   */
 
 router.get('/all', getAllFeatures);
+/**
+  * Route serving get features by Id.
+  * @name GET /feature/:id
+  * @function
+  * @memberof module:routes/feature~featureRoutes
+  * @inner
+  * @returns {object} 200 - Ok
+  * @returns {Error} 400 - Unexpected Error
+  */
+
+router.get('/:id', getFeatureById);
 
 module.exports = router;
