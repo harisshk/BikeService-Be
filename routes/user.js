@@ -11,7 +11,7 @@
 var router = require("express").Router();
 
 
-const { getCustomerDashboard } = require("../controllers/user");
+const { getCustomerDashboard, getOwnerDashboard } = require("../controllers/user");
 
 /**
   * Route serving customer dashboard.
@@ -33,6 +33,6 @@ router.get('/customer/dashboard/:id', getCustomerDashboard);
   * @returns {object} 200 - OK
   * @returns {Error} 400 - Unexpected Error
   */
-router.get('/owner/dashboard/:id', getCustomerDashboard);
+router.get('/owner/dashboard', getOwnerDashboard);
 
 module.exports = router;

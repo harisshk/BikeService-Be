@@ -9,7 +9,7 @@ const createService = async (req, res) => {
             .populate("owner")
             .populate("bike")
         const to = "hari850800@gmail.com";
-        const subject = "TEST";
+        const subject = "New Service";
         const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         const htmlCode =
@@ -116,7 +116,7 @@ const updateService = async (req, res) => {
             { $set: req.body },
             { new: true }
         ).populate("owner");
-        if(updatedService?.status === 'READYFORDELIVERY'){
+        if (updatedService?.status === 'READYFORDELIVERY') {
             sendMailToOne(updatedService?.owner?.email, 'Delivery', `<p>Your bike is ready and you can take delivery</p>`)
         }
         res.status(StatusCodes.OK).json(({

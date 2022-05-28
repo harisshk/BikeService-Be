@@ -27,6 +27,10 @@ const services = new mongoose.Schema(
         bookingDate: {
             type: Date,
             required: true
+        },
+        isDeleted:{
+            type: Boolean,
+            default: false
         }
 	},
 	{timestamps: true},
