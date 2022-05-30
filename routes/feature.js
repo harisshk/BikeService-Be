@@ -10,8 +10,9 @@
  */
 var router = require("express").Router();
 
+const { isSignedIn } = require("../controllers/auth");
 const {
-    createFeature, updateFeature, getAllFeatures, getFeatureById
+  createFeature, updateFeature, getAllFeatures, getFeatureById
 } = require('../controllers/features')
 
 
@@ -22,10 +23,11 @@ const {
   * @memberof module:routes/feature~featureRoutes
   * @inner
   * @returns {object} 201 - Created
-  * @returns {Error} 409 - Conflict Error
+  * @returns {Error} 409 - Conflict Error  
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.post('/create', createFeature)
+router.post('/create', isSignedIn, createFeature)
 
 /**
   * Route serving editing feature.
@@ -33,11 +35,12 @@ router.post('/create', createFeature)
   * @function
   * @memberof module:routes/feature~featureRoutes
   * @inner
-  * @returns {object} 200 - Ok
+  * @returns {object} 200 - Ok 
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.put('/edit/:id', updateFeature)
+router.put('/edit/:id', isSignedIn, updateFeature)
 
 /**
   * Route serving get all features.
@@ -45,21 +48,23 @@ router.put('/edit/:id', updateFeature)
   * @function
   * @memberof module:routes/feature~featureRoutes
   * @inner
-  * @returns {object} 200 - Ok
+  * @returns {object} 200 - Ok 
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/all', getAllFeatures);
+router.get('/all', isSignedIn, getAllFeatures);
 /**
   * Route serving get features by Id.
   * @name GET /feature/:id
   * @function
   * @memberof module:routes/feature~featureRoutes
   * @inner
-  * @returns {object} 200 - Ok
+  * @returns {object} 200 - Ok 
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/:id', getFeatureById);
+router.get('/:id', isSignedIn, getFeatureById);
 
 module.exports = router;

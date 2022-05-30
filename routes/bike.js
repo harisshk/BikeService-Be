@@ -10,12 +10,13 @@
  */
 var router = require("express").Router();
 
+const { isSignedIn } = require("../controllers/auth");
 const {
-    createBikeData,
-    editBikeData,
-    getBikeData,
-    getAllBikeDataByOwner,
-    getAllBikeData
+  createBikeData,
+  editBikeData,
+  getBikeData,
+  getAllBikeDataByOwner,
+  getAllBikeData
 } = require('../controllers/bike')
 
 /**
@@ -25,10 +26,11 @@ const {
   * @memberof module:routes/bike~bikeRoutes
   * @inner
   * @returns {object} 201 - Created
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 409 - Conflict Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.post('/create', createBikeData)
+router.post('/create', isSignedIn, createBikeData)
 
 /**
   * Route serving edit bike.
@@ -37,10 +39,11 @@ router.post('/create', createBikeData)
   * @memberof module:routes/bike~bikeRoutes
   * @inner
   * @returns {object} 200 - OK
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.put('/edit/:id', editBikeData);
+router.put('/edit/:id', isSignedIn, editBikeData);
 
 /**
   * Route serving get bike by id.
@@ -49,10 +52,11 @@ router.put('/edit/:id', editBikeData);
   * @memberof module:routes/bike~bikeRoutes
   * @inner
   * @returns {object} 200 - OK
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/:id', getBikeData);
+router.get('/:id', isSignedIn, getBikeData);
 
 /**
   * Route serving get bike by owner id.
@@ -61,11 +65,12 @@ router.get('/:id', getBikeData);
   * @memberof module:routes/bike~bikeRoutes
   * @inner
   * @returns {object} 200 - OK
+    * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
 
-router.get('/owner/:owner', getAllBikeDataByOwner);
+router.get('/owner/:owner', isSignedIn, getAllBikeDataByOwner);
 
 /**
   * Route serving get all bikes.
@@ -74,10 +79,11 @@ router.get('/owner/:owner', getAllBikeDataByOwner);
   * @memberof module:routes/bike~bikeRoutes
   * @inner
   * @returns {object} 200 - OK
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
 
 
-router.get('/', getAllBikeData);
+router.get('/', isSignedIn, getAllBikeData);
 
 module.exports = router;

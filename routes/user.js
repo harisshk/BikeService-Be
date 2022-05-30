@@ -11,6 +11,7 @@
 var router = require("express").Router();
 
 
+const { isSignedIn } = require("../controllers/auth");
 const { getCustomerDashboard, getOwnerDashboard } = require("../controllers/user");
 
 /**
@@ -19,10 +20,11 @@ const { getCustomerDashboard, getOwnerDashboard } = require("../controllers/user
   * @function
   * @memberof module:routes/user~userRoutes
   * @inner
-  * @returns {object} 200 - OK
+  * @returns {object} 200 - OK 
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.get('/customer/dashboard/:id', getCustomerDashboard);
+router.get('/customer/dashboard/:id', isSignedIn, getCustomerDashboard);
 
 /**
   * Route serving owner dashboard.
@@ -30,9 +32,10 @@ router.get('/customer/dashboard/:id', getCustomerDashboard);
   * @function
   * @memberof module:routes/user~userRoutes
   * @inner
-  * @returns {object} 200 - OK
+  * @returns {object} 200 - OK 
+  * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.get('/owner/dashboard', getOwnerDashboard);
+router.get('/owner/dashboard', isSignedIn, getOwnerDashboard);
 
 module.exports = router;
