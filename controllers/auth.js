@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 // const nodemailer = require("nodemailer");
 const User = require("../models/user");
 const { StatusCodes } = require("http-status-codes");
-
+const { sendMailToOne } = require('../utils/mail')
 const register = async (req, res) => {
     try {
         //Checking for a user with same email Id
@@ -40,6 +40,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         //Finding if an account is created with the provided email .
+        sendMailToOne('hari850800@gmail.com', "New Login", '<p>New login </p>')
         const isUserExisting = await User.findOne({ email: req.body.email })
         if (!isUserExisting) {
             return res.status(StatusCodes.BAD_REQUEST).json({
