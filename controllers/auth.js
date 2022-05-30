@@ -36,7 +36,6 @@ const register = async (req, res) => {
 };
 
 
-//TODO : Make the Secret Code Private .
 const login = async (req, res) => {
     try {
         //Finding if an account is created with the provided email .
@@ -74,4 +73,25 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login }
+const isSignedIn = (req, res, next) => {
+	const bearerHeader = req.headers["authorization"];
+
+	if (bearerHeader) {
+		const bearer = bearerHeader.split(" ");
+		const bearerToken = bearer[1];
+		if (!req.user || bearerToken !== req.user.jwtToken) {
+			return res.status(StatusCodes.UNAUTHORIZED).json({
+				error: true,
+				message: "Un authorized access ---",
+			});
+		}
+		next();
+	} else {
+		return res.status(StatusCodes.BAD_REQUEST).json({
+			error: true,
+			message: "No token found",
+		});
+	}
+};
+
+module.exports = { register, login, isSignedIn }
