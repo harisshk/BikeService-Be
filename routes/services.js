@@ -10,8 +10,10 @@
  */
 var router = require("express").Router();
 
-const { isSignedIn } = require("../controllers/auth");
+const { isSignedIn, setUser } = require("../controllers/auth");
 const { createService, getAllServiceDataByOwner, getAllServices, updateService } = require("../controllers/services");
+
+router.param('userId', setUser);
 
 /**
   * Route serving creating services.
@@ -23,7 +25,7 @@ const { createService, getAllServiceDataByOwner, getAllServices, updateService }
   * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.post('/create', isSignedIn, createService)
+router.post('/create/:userId', isSignedIn, createService)
 
 /**
   * Route serving to get all services by customer id.
@@ -37,7 +39,7 @@ router.post('/create', isSignedIn, createService)
   */
 
 
-router.get('/owner/:owner', isSignedIn, getAllServiceDataByOwner)
+router.get('/owner/:owner/:userId', isSignedIn, getAllServiceDataByOwner)
 
 /**
   * Route serving to get all services by owner.
@@ -51,7 +53,7 @@ router.get('/owner/:owner', isSignedIn, getAllServiceDataByOwner)
   */
 
 
-router.get('/all', isSignedIn, getAllServices)
+router.get('/all/:userId', isSignedIn, getAllServices)
 
 /**
   * Route serving to edit services by id.
@@ -65,6 +67,6 @@ router.get('/all', isSignedIn, getAllServices)
   */
 
 
-router.put('/edit/:id', isSignedIn, updateService)
+router.put('/edit/:id/:userId', isSignedIn, updateService)
 
 module.exports = router;

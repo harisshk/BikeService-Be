@@ -10,11 +10,12 @@
  */
 var router = require("express").Router();
 
-const { isSignedIn } = require("../controllers/auth");
+const { isSignedIn, setUser } = require("../controllers/auth");
 const {
   createFeature, updateFeature, getAllFeatures, getFeatureById
 } = require('../controllers/features')
 
+router.param('userId', setUser);
 
 /**
   * Route serving creating feature.
@@ -27,7 +28,7 @@ const {
   * @returns {Error} 401 - UnAuthorized Error
   * @returns {Error} 400 - Unexpected Error
   */
-router.post('/create', isSignedIn, createFeature)
+router.post('/create/:userId', isSignedIn, createFeature)
 
 /**
   * Route serving editing feature.
@@ -40,7 +41,7 @@ router.post('/create', isSignedIn, createFeature)
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.put('/edit/:id', isSignedIn, updateFeature)
+router.put('/edit/:id/:userId', isSignedIn, updateFeature)
 
 /**
   * Route serving get all features.
@@ -53,7 +54,7 @@ router.put('/edit/:id', isSignedIn, updateFeature)
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/all', isSignedIn, getAllFeatures);
+router.get('/all/:userId', isSignedIn, getAllFeatures);
 /**
   * Route serving get features by Id.
   * @name GET /feature/:id
@@ -65,6 +66,6 @@ router.get('/all', isSignedIn, getAllFeatures);
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/:id', isSignedIn, getFeatureById);
+router.get('/:id/:userId', isSignedIn, getFeatureById);
 
 module.exports = router;

@@ -10,7 +10,7 @@
  */
 var router = require("express").Router();
 
-const { isSignedIn } = require("../controllers/auth");
+const { isSignedIn, setUser } = require("../controllers/auth");
 const {
   createBikeData,
   editBikeData,
@@ -18,6 +18,8 @@ const {
   getAllBikeDataByOwner,
   getAllBikeData
 } = require('../controllers/bike')
+
+router.param('userId', setUser);
 
 /**
   * Route serving creating bike.
@@ -43,7 +45,7 @@ router.post('/create', isSignedIn, createBikeData)
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.put('/edit/:id', isSignedIn, editBikeData);
+router.put('/edit/:id/:userId', isSignedIn, editBikeData);
 
 /**
   * Route serving get bike by id.
@@ -56,7 +58,7 @@ router.put('/edit/:id', isSignedIn, editBikeData);
   * @returns {Error} 400 - Unexpected Error
   */
 
-router.get('/:id', isSignedIn, getBikeData);
+router.get('/:id/:userId', isSignedIn, getBikeData);
 
 /**
   * Route serving get bike by owner id.
@@ -70,7 +72,7 @@ router.get('/:id', isSignedIn, getBikeData);
   */
 
 
-router.get('/owner/:owner', isSignedIn, getAllBikeDataByOwner);
+router.get('/owner/:owner/:userId', isSignedIn, getAllBikeDataByOwner);
 
 /**
   * Route serving get all bikes.
@@ -84,6 +86,6 @@ router.get('/owner/:owner', isSignedIn, getAllBikeDataByOwner);
   */
 
 
-router.get('/', isSignedIn, getAllBikeData);
+router.get('/:userId', isSignedIn, getAllBikeData);
 
 module.exports = router;

@@ -39,7 +39,6 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         //Finding if an account is created with the provided email .
-        sendMailToOne('hari850800@gmail.com', "New Login", '<p>New login </p>')
         const isUserExisting = await User.findOne({ email: req.body.email })
         if (!isUserExisting) {
             return res.status(StatusCodes.BAD_REQUEST).json({
@@ -58,14 +57,13 @@ const login = async (req, res) => {
             { _id: isUserExisting._id, role: isUserExisting.role },
             process.env.JWTCODE,
         );
-        let userInfoWithToken = await User.findOneAndUpdate({ _id: isUserExisting._id }, { jwtToken: token }).select('-password')
+        let userInfoWithToken = await User.findOneAndUpdate({ _id: isUserExisting._id }, { jwtToken: token }, { new: true }).select('-password')
         return res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: "Successfully Logged in",
             user: userInfoWithToken,
         })
     } catch (error) {
-        console.log(error)
         return res.status(StatusCodes.BAD_REQUEST).json({
             success: false,
             message: "Error in Login",
@@ -73,25 +71,44 @@ const login = async (req, res) => {
     }
 };
 
+const setUser = (req, res, next, id) => {
+    if (!id) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            error: true,
+            message: "user Id Not Available",
+        });
+    }
+    User.findOne({ _id: id }, (error, userInfo) => {
+        if (error) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                error: true,
+                message: "Error in finding the user Id",
+            });
+        }
+        //userInfo.password = undefined;
+        req.user = userInfo;
+        next();
+    });
+};
 const isSignedIn = (req, res, next) => {
-	const bearerHeader = req.headers["authorization"];
+    const bearerHeader = req.headers["authorization"];
 
-	if (bearerHeader) {
-		const bearer = bearerHeader.split(" ");
-		const bearerToken = bearer[1];
-		if (!req.user || bearerToken !== req.user.jwtToken) {
-			return res.status(StatusCodes.UNAUTHORIZED).json({
-				error: true,
-				message: "Un authorized access ---",
-			});
-		}
-		next();
-	} else {
-		return res.status(StatusCodes.BAD_REQUEST).json({
-			error: true,
-			message: "No token found",
-		});
-	}
+    if (bearerHeader) {
+        const bearer = bearerHeader.split(" ");
+        const bearerToken = bearer[1];
+        if (!req.user || bearerToken !== req.user.jwtToken) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                error: true,
+                message: "Un authorized access ---",
+            });
+        }
+        next();
+    } else {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            error: true,
+            message: "No token found",
+        });
+    }
 };
 
-module.exports = { register, login, isSignedIn }
+module.exports = { register, login, isSignedIn, setUser }
